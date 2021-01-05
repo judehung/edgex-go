@@ -24,6 +24,7 @@ import (
 const (
 	testDeviceResourceName = "TestDeviceResource"
 	testDeviceName         = "TestDevice"
+	testProfileName        = "TestProfile"
 	testUUIDString         = "ca93c8fa-9919-4ec5-85d3-f81b2b6a7bc1"
 	testCreatedTime        = 1600666214495
 	testOriginTime         = 1600666185705354000
@@ -132,10 +133,11 @@ func newMockDB(persist bool) *dbMock.DBClient {
 
 func TestAddEvent(t *testing.T) {
 	evt := models.Event{
-		Id:         testUUIDString,
-		DeviceName: testDeviceName,
-		Origin:     testOriginTime,
-		Readings:   buildReadings(),
+		Id:          testUUIDString,
+		DeviceName:  testDeviceName,
+		ProfileName: testProfileName,
+		Origin:      testOriginTime,
+		Readings:    buildReadings(),
 	}
 
 	tests := []struct {
@@ -163,7 +165,7 @@ func TestAddEvent(t *testing.T) {
 					return dbClientMock
 				},
 			})
-			_, err := AddEvent(evt, context.Background(), dic)
+			_, err := AddEvent(evt, testProfileName, testDeviceName, context.Background(), dic)
 
 			require.NoError(t, err)
 

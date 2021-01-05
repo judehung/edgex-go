@@ -26,15 +26,13 @@ import (
 )
 
 type EventController struct {
-	reader io.EventReader
-	dic    *di.Container
+	dic *di.Container
 }
 
 // NewEventController creates and initializes an EventController
 func NewEventController(dic *di.Container) *EventController {
 	return &EventController{
-		reader: io.NewEventRequestReader(),
-		dic:    dic,
+		dic: dic,
 	}
 }
 
@@ -49,7 +47,12 @@ func (ec *EventController) AddEvent(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	correlationId := correlation.FromContext(ctx)
 
-	reader := io.NewEventRequestReader()
+	// URL parameters
+	vars := mux.Vars(r)
+	profileName := vars[v2.ProfileName]
+	deviceName := vars[v2.DeviceName]
+
+	reader := io.NewEventRequestReader(r)
 	addEventReqDTOs, err := reader.ReadAddEventRequest(r.Body)
 	if err != nil {
 		lc.Error(err.Error(), clients.CorrelationHeader, correlationId)
@@ -68,7 +71,7 @@ func (ec *EventController) AddEvent(w http.ResponseWriter, r *http.Request) {
 	// map Event models to AddEventResponse DTOs
 	var addResponses []interface{}
 	for i, e := range events {
-		newId, err := application.AddEvent(e, ctx, ec.dic)
+		newId, err := application.AddEvent(e, profileName, deviceName, ctx, ec.dic)
 		var addEventResponse interface{}
 		// get the requestID from AddEventRequestDTO
 		reqId := addEventReqDTOs[i].RequestId

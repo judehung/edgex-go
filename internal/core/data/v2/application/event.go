@@ -26,17 +26,33 @@ import (
 	"github.com/google/uuid"
 )
 
+func validateEvent(e models.Event, profileName string, deviceName string, ctx context.Context, dic *di.Container) errors.EdgeX {
+	if profileName == "" {
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "empty profile name not allowed", nil)
+	}
+	if deviceName == "" {
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, "empty device name not allowed", nil)
+	}
+	if e.ProfileName != profileName {
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("event's profileName %s mismatches %s", e.ProfileName, profileName), nil)
+	}
+	if e.DeviceName != deviceName {
+		return errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("event's deviceName %s mismatches %s", e.DeviceName, deviceName), nil)
+	}
+	return checkDevice(e.DeviceName, ctx, dic)
+}
+
 // The AddEvent function accepts the new event model from the controller functions
 // and invokes addEvent function in the infrastructure layer
-func AddEvent(e models.Event, ctx context.Context, dic *di.Container) (id string, err errors.EdgeX) {
-	configuration := dataContainer.ConfigurationFrom(dic.Get)
-	dbClient := v2DataContainer.DBClientFrom(dic.Get)
-	lc := container.LoggingClientFrom(dic.Get)
-
-	err = checkDevice(e.DeviceName, ctx, dic)
+func AddEvent(e models.Event, profileName string, deviceName string, ctx context.Context, dic *di.Container) (id string, err errors.EdgeX) {
+	err = validateEvent(e, profileName, deviceName, ctx, dic)
 	if err != nil {
 		return "", errors.NewCommonEdgeXWrapper(err)
 	}
+
+	configuration := dataContainer.ConfigurationFrom(dic.Get)
+	dbClient := v2DataContainer.DBClientFrom(dic.Get)
+	lc := container.LoggingClientFrom(dic.Get)
 
 	// Add the event and readings to the database
 	if configuration.Writable.PersistData {
