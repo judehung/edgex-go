@@ -25,3 +25,5 @@ require (
 )
 
 go 1.15
+
+replace github.com/edgexfoundry/go-mod-core-contracts => ../go-mod-core-contracts
