@@ -14,14 +14,14 @@ import (
 
 	"github.com/edgexfoundry/edgex-go/internal/core/command/config"
 	commandContainer "github.com/edgexfoundry/edgex-go/internal/core/command/container"
-	v2CommandContainer "github.com/edgexfoundry/edgex-go/internal/core/command/v2/bootstrap/container"
-	"github.com/edgexfoundry/edgex-go/internal/core/command/v2/mockclients/interfaces/mocks"
 	"github.com/edgexfoundry/go-mod-bootstrap/v2/bootstrap/container"
 	bootstrapConfig "github.com/edgexfoundry/go-mod-bootstrap/v2/config"
 	"github.com/edgexfoundry/go-mod-bootstrap/v2/di"
+	v2Container "github.com/edgexfoundry/go-mod-bootstrap/v2/v2/bootstrap/container"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/logger"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2/clients/interfaces/mocks"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2/dtos"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2/dtos/common"
 	responseDTO "github.com/edgexfoundry/go-mod-core-contracts/v2/v2/dtos/responses"
@@ -120,19 +120,19 @@ func TestCommandsByDeviceName(t *testing.T) {
 	expectedDeviceProfileResponse := buildDeviceProfileResponse()
 	expectedCoreCommands := buildCoreCommands(expectedDeviceProfileResponse.Profile.CoreCommands)
 
-	dcMock := &mocks.MockDeviceClient{}
+	dcMock := &mocks.DeviceClient{}
 	dcMock.On("DeviceByName", context.Background(), testDeviceName).Return(expectedDeviceResponse, nil)
 	dcMock.On("DeviceByName", context.Background(), nonExistDeviceName).Return(responseDTO.DeviceResponse{}, errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "fail to query device by name", nil))
 
-	dpcMock := &mocks.MockDeviceProfileClient{}
+	dpcMock := &mocks.DeviceProfileClient{}
 	dpcMock.On("DeviceProfileByName", context.Background(), testProfileName).Return(expectedDeviceProfileResponse, nil)
 
 	dic := NewMockDIC()
 	dic.Update(di.ServiceConstructorMap{
-		v2CommandContainer.MetadataDeviceClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceClient
+		v2Container.MetadataDeviceClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceClient
 			return dcMock
 		},
-		v2CommandContainer.MetadataDeviceProfileClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceProfileClient
+		v2Container.MetadataDeviceProfileClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceProfileClient
 			return dpcMock
 		},
 	})

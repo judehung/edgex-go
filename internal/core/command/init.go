@@ -22,12 +22,12 @@ import (
 
 	"github.com/edgexfoundry/edgex-go/internal/core/command/container"
 	"github.com/edgexfoundry/edgex-go/internal/core/command/v2"
-	v2CommandContainer "github.com/edgexfoundry/edgex-go/internal/core/command/v2/bootstrap/container"
 	errorContainer "github.com/edgexfoundry/edgex-go/internal/pkg/container"
 	"github.com/edgexfoundry/edgex-go/internal/pkg/errorconcept"
 	bootstrapContainer "github.com/edgexfoundry/go-mod-bootstrap/v2/bootstrap/container"
 	"github.com/edgexfoundry/go-mod-bootstrap/v2/bootstrap/startup"
 	"github.com/edgexfoundry/go-mod-bootstrap/v2/di"
+	v2Container "github.com/edgexfoundry/go-mod-bootstrap/v2/v2/bootstrap/container"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/metadata"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/urlclient/local"
@@ -71,11 +71,14 @@ func (b *Bootstrap) BootstrapHandler(ctx context.Context, wg *sync.WaitGroup, _ 
 		errorContainer.ErrorHandlerName: func(get di.Get) interface{} {
 			return errorconcept.NewErrorHandler(lc)
 		},
-		v2CommandContainer.MetadataDeviceClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceClient
+		v2Container.MetadataDeviceClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceClient
 			return V2Clients.NewDeviceClient(configuration.Clients["Metadata"].Url() + V2Routes.ApiDeviceRoute)
 		},
-		v2CommandContainer.MetadataDeviceProfileClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceProfileClient
+		v2Container.MetadataDeviceProfileClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceProfileClient
 			return V2Clients.NewDeviceProfileClient(configuration.Clients["Metadata"].Url() + V2Routes.ApiDeviceProfileRoute)
+		},
+		v2Container.MetadataDeviceServiceClientName: func(get di.Get) interface{} { // add v2 API MetadataDeviceServiceClient
+			return V2Clients.NewDeviceServiceClient(configuration.Clients["Metadata"].Url() + V2Routes.ApiDeviceServiceRoute)
 		},
 	})
 
