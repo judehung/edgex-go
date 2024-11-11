@@ -68,8 +68,6 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/eclipse/paho.mqtt.golang v1.5.0 h1:EH+bUVJNgttidWFkLLVKaQPGmkTUfQQqjOsyvMGvD6o=
 github.com/eclipse/paho.mqtt.golang v1.5.0/go.mod h1:du/2qNQVqJf/Sqs4MEL77kR8QTqANF7XU7Fk0aOTAgk=
-github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.0-dev.5 h1:PRVpZco9lmvyE8bhatgkygi1EeTSgQx84CuXmEEIp3A=
-github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.0-dev.5/go.mod h1:KuxKgNdhxsuReOv8xYXReCWxrwtmAJZjjVGPRTzsG6Y=
 github.com/edgexfoundry/go-mod-configuration/v4 v4.0.0-dev.4 h1:Bw8Bxoc2LjAfkgWvAQtbeqnAaGPmKiCoAHlHGalhnv4=
 github.com/edgexfoundry/go-mod-configuration/v4 v4.0.0-dev.4/go.mod h1:Jc8kjQTAUYzuHbQzRuVzfPZy3QfJGMQ0rGHOhRit7to=
 github.com/edgexfoundry/go-mod-core-contracts/v4 v4.0.0-dev.4 h1:MrGBXxpgpL0TGMjXXh2E85pUwrUiqB/vgDq8SKztFrk=
@@ -287,6 +285,8 @@ github.com/json-iterator/go v1.1.11/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/jtolds/gls v4.20.0+incompatible/go.mod h1:QJZ7F/aHp+rZTRtaJ1ow/lLfFfVYBRgL+9YlvaHOwJU=
+github.com/judehung/go-mod-bootstrap/v4 v4.0.0-20241109084700-c362e7cd73ed h1:4kAujLV3fNzZWpljnXcq5jZjzXJkL6NdCDCQRr5dVK4=
+github.com/judehung/go-mod-bootstrap/v4 v4.0.0-20241109084700-c362e7cd73ed/go.mod h1:iG/DCiSoJLx8TtRxDa/6egRLjFw8P0/QmsHkGOBb05A=
 github.com/kataras/go-events v0.0.3 h1:o5YK53uURXtrlg7qE/vovxd/yKOJcLuFtPQbf1rYMC4=
 github.com/kataras/go-events v0.0.3/go.mod h1:bFBgtzwwzrag7kQmGuU1ZaVxhK2qseYPQomXoVEMsj4=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=

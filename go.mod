@@ -134,3 +134,5 @@ require (
 	gopkg.in/go-jose/go-jose.v2 v2.6.3 // indirect
 	nhooyr.io/websocket v1.8.17 // indirect
 )
+
+replace github.com/edgexfoundry/go-mod-bootstrap/v4 => github.com/judehung/go-mod-bootstrap/v4 v4.0.0-20241109084700-c362e7cd73ed

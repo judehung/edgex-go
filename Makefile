@@ -99,6 +99,9 @@ build: $(MICROSERVICES)
 build-nats:
 	make -e ADD_BUILD_TAGS=include_nats_messaging build
 
+build-noziti:
+	make -e ADD_BUILD_TAGS=no_openziti build
+
 tidy:
 	$(GO) mod tidy
 
